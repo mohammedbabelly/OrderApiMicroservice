@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,8 +6,9 @@
   </PropertyGroup>
   <ItemGroup>
 
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
-  </ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrderApiMicroservice.Domain\OrderApiMicroservice.Domain.csproj" />
   </ItemGroup>

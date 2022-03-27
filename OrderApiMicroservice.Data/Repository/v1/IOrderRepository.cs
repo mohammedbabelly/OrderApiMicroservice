@@ -10,8 +10,8 @@ namespace OrderApiMicroservice.Data.Repository.v1
     {
         Task<List<Order>> GetPaidOrdersAsync(CancellationToken cancellationToken);
 
-        Task<Order> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken);
+        Task<Order> GetOrderByIdAsync(string orderId, CancellationToken cancellationToken);
 
-        Task<List<Order>> GetOrderByCustomerGuidAsync(Guid customerId, CancellationToken cancellationToken);
+        Task<List<Order>> GetOrderByCustomerGuidAsync(string customerId, CancellationToken cancellationToken);
     }
 }

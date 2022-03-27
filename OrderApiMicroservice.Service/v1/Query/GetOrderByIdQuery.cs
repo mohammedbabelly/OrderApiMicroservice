@@ -6,6 +6,6 @@ namespace OrderApiMicroservice.Service.v1.Query
 {
    public class GetOrderByIdQuery : IRequest<Order>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

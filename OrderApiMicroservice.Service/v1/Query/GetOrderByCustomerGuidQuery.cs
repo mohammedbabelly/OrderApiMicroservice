@@ -7,6 +7,7 @@ namespace OrderApiMicroservice.Service.v1.Query
 {
     public class GetOrderByCustomerGuidQuery : IRequest<List<Order>>
     {
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
+        public string NewFullname { get; set; }
     }
 }

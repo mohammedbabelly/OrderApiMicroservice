@@ -21,6 +21,7 @@ namespace OrderApiMicroservice.Messaging.Receive.Receiver.v1
         private readonly string _queueName;
         private readonly string _username;
         private readonly string _password;
+        private readonly string _AMQP;
 
         public CustomerFullNameUpdateReceiver(ICustomerNameUpdateService customerNameUpdateService, IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
@@ -28,6 +29,7 @@ namespace OrderApiMicroservice.Messaging.Receive.Receiver.v1
             _queueName = rabbitMqOptions.Value.QueueName;
             _username = rabbitMqOptions.Value.UserName;
             _password = rabbitMqOptions.Value.Password;
+            _AMQP = rabbitMqOptions.Value.AMQP;
             _customerNameUpdateService = customerNameUpdateService;
             InitializeRabbitMqListener();
         }
@@ -36,9 +38,8 @@ namespace OrderApiMicroservice.Messaging.Receive.Receiver.v1
         {
             var factory = new ConnectionFactory
             {
-                HostName = _hostname,
-                UserName = _username,
-                Password = _password
+                //Uri = new System.Uri($"amqps://{_username}:{_password}@{_hostname}/{_username}")
+                Uri = new System.Uri(_AMQP)
             };
 
             _connection = factory.CreateConnection();
@@ -55,6 +56,7 @@ namespace OrderApiMicroservice.Messaging.Receive.Receiver.v1
             consumer.Received += (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
+                content = content.Replace("_id", "Id");  
                 var updateCustomerFullNameModel = JsonConvert.DeserializeObject<UpdateCustomerFullNameModel>(content);
 
                 HandleMessage(updateCustomerFullNameModel);

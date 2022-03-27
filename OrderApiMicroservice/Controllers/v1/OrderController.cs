@@ -61,7 +61,7 @@ namespace OrderApiMicroservice.Controllers.v1
         /// <response code="400">Returned if the orders could not be retrieved</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<List<Order>>> Orders()
         {
             try
@@ -84,7 +84,7 @@ namespace OrderApiMicroservice.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("Pay/{id}")]
-        public async Task<ActionResult<Order>> Pay(Guid id)
+        public async Task<ActionResult<Order>> Pay(string id)
         {
             try
             {

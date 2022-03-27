@@ -37,8 +37,18 @@ namespace OrderApiMicroservice {
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderApiMicroservice", Version = "v1" });
             });
-
-            services.AddDbContext<OrderContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase")) {
+                services.AddDbContext<OrderContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            } else {
+                //connect to baseDb
+                var baseConString = Configuration.GetValue<string>("ConnectionStrings:OrderDb");
+                //services.AddTransient()
+                services.AddDbContext<OrderContext>((serviceProvider, optionsBuilder) => {
+                    optionsBuilder.UseNpgsql(baseConString,
+                        b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName));
+                    optionsBuilder.UseApplicationServiceProvider(serviceProvider);
+                });
+            }
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
